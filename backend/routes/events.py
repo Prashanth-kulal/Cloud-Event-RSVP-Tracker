@@ -44,12 +44,9 @@ async def _build_event_response(event: Event, db: AsyncSession) -> dict:
     ) or 0
 
     organizer_name = None
-    if event.organizer:
-        organizer_name = event.organizer.name
-    else:
-        org = await db.get(User, event.organizer_id)
-        if org:
-            organizer_name = org.name
+    org = await db.get(User, event.organizer_id)
+    if org:
+        organizer_name = org.name
 
     return {
         "id": event.id,
